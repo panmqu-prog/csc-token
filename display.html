@@ -1,19 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Token Display</title>
-<style>
-body{text-align:center;background:black;color:white;font-family:Arial}
-.token{font-size:150px;margin-top:80px}
-.counter{font-size:60px}
-</style>
-</head>
-<body>
-
-<div class="token" id="num">0</div>
-<div class="counter" id="counter">Counter</div>
-
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+ <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
 <script>
@@ -25,17 +10,13 @@ projectId:"csc-token"
 };
 firebase.initializeApp(firebaseConfig);
 
-let speech=new SpeechSynthesisUtterance();
+firebase.database().ref("token/currentToken")
+.on("value",snap=>{
+document.getElementById("num").innerHTML=snap.val();
+});
 
-firebase.database().ref("token").on("value",snap=>{
-let data=snap.val();
-document.getElementById("num").innerHTML=data.number;
-document.getElementById("counter").innerHTML="കൗണ്ടർ "+data.counter+" ലേക്ക് വരുക";
-
-speech.text="ടോക്കൺ "+data.number+" കൗണ്ടർ "+data.counter+" ലേക്ക് വരുക";
-speech.lang="ml-IN";
-speechSynthesis.speak(speech);
+firebase.database().ref("token/currentCounter")
+.on("value",snap=>{
+document.getElementById("counter").innerHTML="Counter "+snap.val();
 });
 </script>
-</body>
-</html>
