@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Counter</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body{text-align:center;font-family:Arial;background:#111827;color:white}
+button{padding:15px 25px;margin:10px;font-size:20px;border:none;border-radius:10px}
+.next{background:#22c55e}
+.counter{background:#3b82f6}
+</style>
+</head>
+<body>
+
+<h1>Next Token Call</h1>
+<button class="next" onclick="next()">NEXT TOKEN</button>
+
+<h2>Select Counter</h2>
+<button class="counter" onclick="setCounter(1)">Counter 1</button>
+<button class="counter" onclick="setCounter(2)">Counter 2</button>
+<button class="counter" onclick="setCounter(3)">Counter 3</button>
+<button class="counter" onclick="setCounter(4)">Counter 4</button>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+<script>
+var firebaseConfig = {
+apiKey:"AIzaSyBJPKSrYs66lTPOMbA5B5r6pnm2RAg8W6U",
+authDomain:"csc-token.firebaseapp.com",
+databaseURL:"https://csc-token-default-rtdb.asia-southeast1.firebasedatabase.app",
+projectId:"csc-token"
+};
+firebase.initializeApp(firebaseConfig);
+
+let counter=1;
+function setCounter(c){counter=c;}
+
+function next(){
+let ref=firebase.database().ref("token");
+ref.once("value",snap=>{
+let n=snap.val().number+1;
+ref.set({number:n,counter:counter});
+});
+}
+</script>
+</body>
+</html>
