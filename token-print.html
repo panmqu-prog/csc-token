@@ -1,0 +1,41 @@
+ <!DOCTYPE html>
+<html>
+<head>
+<title>Token Print</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body{font-family:Arial;text-align:center;background:#f3f4f6}
+button{padding:20px 40px;font-size:25px;background:#16a34a;color:white;border:none;border-radius:10px}
+.token{font-size:90px;font-weight:bold;margin:20px}
+</style>
+</head>
+<body>
+
+<h1>ടോക്കൺ എടുക്കുക</h1>
+<div class="token" id="num">0</div>
+<button onclick="printToken()">PRINT TOKEN</button>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+<script>
+var firebaseConfig = {
+apiKey:"AIzaSyBJPKSrYs66lTPOMbA5B5r6pnm2RAg8W6U",
+authDomain:"csc-token.firebaseapp.com",
+databaseURL:"https://csc-token-default-rtdb.asia-southeast1.firebasedatabase.app",
+projectId:"csc-token"
+};
+firebase.initializeApp(firebaseConfig);
+
+function printToken(){
+let ref=firebase.database().ref("token/number");
+ref.once("value",snap=>{
+let n=snap.val()+1;
+ref.set(n);
+document.getElementById("num").innerHTML=n;
+window.print();
+});
+}
+</script>
+</body>
+</html>
