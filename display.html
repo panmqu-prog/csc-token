@@ -1,4 +1,27 @@
- <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+ <!DOCTYPE html>
+<html>
+<head>
+<title>TV Display</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body{
+font-family:Arial;
+background:black;
+color:white;
+text-align:center;
+}
+h1{font-size:60px;margin-top:40px}
+.token{font-size:150px;font-weight:bold;color:#22c55e}
+.counter{font-size:80px;margin-top:20px}
+</style>
+</head>
+<body>
+
+<h1>NOW SERVING</h1>
+<div class="token" id="token">0</div>
+<div class="counter" id="counter">Counter 0</div>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
 <script>
@@ -10,13 +33,14 @@ projectId:"csc-token"
 };
 firebase.initializeApp(firebaseConfig);
 
-firebase.database().ref("token/currentToken")
-.on("value",snap=>{
-document.getElementById("num").innerHTML=snap.val();
-});
-
-firebase.database().ref("token/currentCounter")
-.on("value",snap=>{
-document.getElementById("counter").innerHTML="Counter "+snap.val();
+firebase.database().ref("call").on("value",(snap)=>{
+let data=snap.val();
+if(data){
+document.getElementById("token").innerHTML=data.token;
+document.getElementById("counter").innerHTML="Counter "+data.counter;
+}
 });
 </script>
+
+</body>
+</html>
